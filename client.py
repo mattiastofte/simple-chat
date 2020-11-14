@@ -1,11 +1,11 @@
 import socket
 
-HOST = '46.9.226.154'  # The server's hostname or IP address
-PORT = 65432        # The port used by the server
+HEADER = 64
+PORT = 65432
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = "!DISCONNECT"
+SERVER = "46.9.226.154"
+ADDR = (SERVER, PORT)
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b'Hello, world')
-    data = s.recv(1024)
-
-print('Received', repr(data))
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
