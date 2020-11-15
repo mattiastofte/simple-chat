@@ -43,8 +43,10 @@ def sendallclients(message):
     for client in clients:
         client.send(send_length)
         client.send(message)
+
 def get_time():
     return datetime.now().strftime("%H:%M")
+
 def start():
     server.listen()
     print(f"[Server] Listening on {SERVER}\n")
@@ -54,7 +56,8 @@ def start():
         thread.start() # starts new thread
         print(f"[{get_time()}] [Server] Client with id #{addr[1]} has connected to the server.")
         print(f"[{get_time()}] [Server] {threading.activeCount()-1} client(s) currently connected.")
-print(f"simple-chat\nmade with love <3 by {DEVELOPER}")
+
+print(f"simple-chat\nmade with <3 by {DEVELOPER}")
 print("━━━━━━━━━━━━━━━━━━━━━━━━\n")
 print(f"\n[Server] Socket created succesfully. Starting server.")
 start()
