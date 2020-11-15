@@ -28,7 +28,7 @@ def handle_client(conn, addr):
             if message == DISCONNECT_MESSAGE:
                 connected = False
             print(f"[{get_time()}] [{addr[0]}] {message}")
-            sendallclients((f"[{get_time()}] [{addr[0]}] {message}").encode(FORMAT))
+            sendallclients((f"[{get_time()}] [#{addr[1]}] {message}").encode(FORMAT))
     clients.remove(conn)
     conn.close()
 
@@ -43,14 +43,16 @@ def get_time():
     return datetime.now().strftime("%H:%M")
 def start():
     server.listen()
-    print(f"[{get_time()}] [Server] Listening on {SERVER}")
+    print(f"[Server] Listening on {SERVER}")
     while True:
         conn, addr = server.accept() # waits for new connection, stores object in conn and address in addr
         thread = threading.Thread(target=handle_client, args=(conn, addr)) # new thread with function handle_client as target and conn object and addr as arguments
         thread.start() # starts new thread
-        print(f"[{get_time()}[{SERVER}] {addr[0]} has connected to the server. {threading.activeCount()-1} client(s) currently connected.")
+        print(f"[Server] [{get_time()}] Client with id #{addr[1]} has connected to the server.")
+        print(f"[Server] [{get_time()}] {threading.activeCount()-1} client(s) currently connected.")
 print(f"simple-chat\nmade with love <3 by {DEVELOPER}")
-print(f"\n[{get_time()}] [Server] Socket created succesfully. Starting server.")
+print("━━━━━━━━━━━━━━━━━━━━━━━━\n")
+print(f"\n[Server] Socket created succesfully. Starting server.")
 start()
 
 
