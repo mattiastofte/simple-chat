@@ -18,6 +18,8 @@ client.connect(ADDR)
 system("title "+VERSION)
 
 def send(message):
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[K")
     message = message.encode(FORMAT) # encodes to utf-8
     message_length = len(message)
     send_length = str(message_length).encode(FORMAT) # sends a string with length of message
@@ -26,7 +28,7 @@ def send(message):
     client.send(message)
 
 def receive():
-    print("recieve thread online")
+    print("[Client] Initializing receive thread.\n")
     while True:
         message_length = client.recv(HEADER).decode(FORMAT) # decode from bytes format to string using utf-8
         if message_length: # first message is empty (null), to tell that the client is connected, therefor you have to check if message_length has content. 
@@ -35,12 +37,13 @@ def receive():
             print(f"\r{message}")
 
 def start():
-    print(f"[Client] Succesfully connected to server ")
+    print(f"\n[Client] Succesfully connected to server.")
     x = threading.Thread(target=receive, args=())
     x.start()
     while True:
         send(input(""))
 
 print(f"simple-chat\nmade with love <3 by {DEVELOPER}\n")
+print("━━━━━━━━━━━━━━━━━━━━━━━━\n")
 start()
     
